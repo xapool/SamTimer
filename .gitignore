@@ -44,3 +44,7 @@ build_release.log
 
 # 规划/分析文档（按需求不纳入版本库）
 docs/
+
+# 由 buildPayload 生成（Gradle 每次 assembleDebug 重新编译，不入库）
+app/src/main/jniLibs/arm64-v8a/libtimer.so
+.work/
