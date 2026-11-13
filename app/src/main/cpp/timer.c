@@ -1767,11 +1767,11 @@ static void fill_fake_pipe_buf(unsigned char *base, size_t o,
  *   - NO daemon start, NO --version probe (a direct ksud exec gets
  *     KDP-killed and only adds "Killed" noise), NO pm/find ladder.
  *
- * --package-name must name the manager that is actually installed: the
- * libksud.so in jniLibs is KernelSU-Next 3.4.2, whose manager package is
- * com.rifsxd.ksunext (its own strings reference
- * "#/com.rifsxd.ksunext.ui.MainActivity").  A stale name from another
- * lineage (me.weishu.kernelsu) leaves the driver without a manager uid,
+ * --package-name must name the manager that is actually installed.  The
+ * libksud.so in jniLibs is built from diabl0w/KernelSU, whose manager
+ * package is me.weishu.kernelsu (its own strings reference
+ * "#/me.weishu.kernelsu.ui.MainActivity").  A stale name from another lineage
+ * (com.rifsxd.ksunext, KernelSU-Next) leaves the driver without a manager uid,
  * so the manager app can never be granted su even when the module loaded. */
 static void write_ksu_script(void)
 {
@@ -1861,12 +1861,12 @@ static void write_ksu_script(void)
         "grep -qiE 'ksud|kernelsu'; then\n"
         "  echo '[ksu] bind mount active, exec via logcat path'\n"
         "  /system/bin/logcat late-load "
-        "--package-name com.rifsxd.ksunext\n"
+        "--package-name me.weishu.kernelsu\n"
         "  RC=$?\n"
         "else\n"
         "  echo '[ksu] no bind mount; direct exec (KDP may kill)'\n"
         "  \"$KSUD\" late-load "
-        "--package-name com.rifsxd.ksunext\n"
+        "--package-name me.weishu.kernelsu\n"
         "  RC=$?\n"
         "fi\n"
         "echo \"[ksu] late-load rc=$RC\"\n"

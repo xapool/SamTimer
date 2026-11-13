@@ -34,7 +34,11 @@ class RootService(private val context: Context) : IRootService.Stub() {
         // both paths the same way).
         private const val KSUD_STAGE_PATH = "/data/local/tmp/.ksud-stage"
         private const val TRACE_BUF = "/sys/kernel/tracing/buffer_size_kb"
-        private const val INJECT_TIMEOUT_SEC = 420L
+        // The umhpipe chain retries probabilistic plants (panic_on_warn,
+        // marker verify x2, bootstrap x2), so a slow boot can legitimately
+        // take longer than the old 420 s; exceeding this only changes the
+        // reported result, the exploit is never killed here.
+        private const val INJECT_TIMEOUT_SEC = 600L
     }
 
     override fun isReady(): Boolean {
